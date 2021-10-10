@@ -32,3 +32,4 @@ str(TripData)
 ```
 
 ##mean ok data set
+Mean 2
