@@ -30,4 +30,5 @@ TripData <- read.csv("final_tripdata_full Data.csv")
 head(TripData)
 str(TripData)
 ```
- 
+
+##mean ok data set
