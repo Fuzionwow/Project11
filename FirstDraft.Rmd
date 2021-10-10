@@ -35,10 +35,21 @@ str(TripData)
 Mean 2
 
  Data Manipulation
+ 
+ 0. Remove Nulls
+```{r}
+
+CleanData <-TripData %>%
+  na_if("") %>%
+  na.omit
+
+```
+ 
+ 
  1. Separating started_at & ended_at date field to get Date(day month year) and time
  
 ```{r}
-TripData <- TripData  %>% 
+CleanData <- CleanData  %>% 
             separate(started_at, into = c("start_date", "start_time"), sep = " ") %>% 
             separate(ended_at, into = c("end_date", "end_time"), sep = " ")
 ```
@@ -46,11 +57,13 @@ TripData <- TripData  %>%
  2. Creating a new column called Route to map and group start station and end station
  
 ```{r}
-TripData <- TripData %>% 
-  unite(route,start_station_id,end_station_id,sep = "-")
+CleanData <- CleanData %>% 
+  unite(route,start_station_id,end_station_id,sep = "-") %>% 
+  
 
-# TripData_COunt <-  TripData %>% 
-  #group_by(route) %>% 
- # summarise(count = n())
+TripData_COunt <-  CleanData %>% 
+  group_by(route) %>% 
+ summarise(count = n()) %>% 
+arrange(desc(count))
 ```
  
