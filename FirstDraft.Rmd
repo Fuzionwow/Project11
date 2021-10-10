@@ -51,18 +51,21 @@ CleanData <-TripData %>%
 ```{r}
 CleanData <- CleanData  %>% 
             separate(started_at, into = c("start_date", "start_time"), sep = " ") %>% 
-            separate(ended_at, into = c("end_date", "end_time"), sep = " ")
+            separate(ended_at, into = c("end_date", "end_time"), sep = " ") %>% 
+            separate(start_date, into = c("start_day", "start_month","start_year"), sep = "/") %>% 
+            separate(end_date, into = c("end_day", "end_month","end_year"), sep = "/")
 ```
  
  2. Creating a new column called Route to map and group start station and end station
  
 ```{r}
 CleanData <- CleanData %>% 
-  unite(route,start_station_id,end_station_id,sep = "-") %>% 
+  unite(route_id,start_station_id,end_station_id,sep = "-") %>% 
+  unite(route_name,start_station_name,end_station_name,sep = " TO ") 
   
 
 TripData_COunt <-  CleanData %>% 
-  group_by(route) %>% 
+  group_by(route_name) %>% 
  summarise(count = n()) %>% 
 arrange(desc(count))
 ```
