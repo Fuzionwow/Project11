@@ -19,60 +19,103 @@ library(dplyr)
 
 ```
 
-File Upload and Asisgnment
-```{r}
-setwd("~/Desktop/RStudioProject1_OMIS665/RStudioProject_OMIS665")
-TripData <- read.csv("final_tripdata_full Data.csv")
-```
- 
- Exploring the Dataset
-```{r}
-head(TripData)
-str(TripData)
-glimpse(TripData)
+---
+title: "Untitled1"
+author: "Dushyant Singh"
+date: "10/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##mean ok data set
-Mean 2
-
- Data Manipulation
- 
- 0. Remove Nulls and Messy Data
 ```{r}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
 
-CleanData <-TripData %>%
-  na_if("") %>%
-  na.omit
-
-CleanData <- CleanData %>% 
-  filter(distance >0 & duration >0)
-
-glimpse(CleanData)
-summary(CleanData)
 ```
- 
- 
- 1. Separating started_at & ended_at date field to get Date(day month year) and time
- 
+
 ```{r}
-CleanData <- CleanData  %>% 
-            separate(started_at, into = c("start_date", "start_time"), sep = " ") %>% 
-            separate(ended_at, into = c("end_date", "end_time"), sep = " ") %>% 
-            separate(start_date, into = c("start_day", "start_month","start_year"), sep = "/") %>% 
-            separate(end_date, into = c("end_day", "end_month","end_year"), sep = "/")
+setwd("C:/Users/singh/Downloads")
+HR <- read.csv("HR.csv")
+p1<-read.csv("Homework Three - Part One.csv")
 ```
- 
- 2. Creating a new column called Route to map and group start station and end station
- 
-```{r}
-CleanData <- CleanData %>% 
-  unite(route_id,start_station_id,end_station_id,sep = "-") %>% 
-  unite(route_name,start_station_name,end_station_name,sep = " TO ") 
-  
 
-TripData_COunt <-  CleanData %>% 
-  group_by(route_name) %>% 
- summarise(count = n()) %>% 
-arrange(desc(count))
+
+
+```{r}
+head(HR)
+str(HR)
+glimpse(HR)
 ```
- 
+
+```{r}
+X = table(HR$Education,HR$MonthlyIncome)
+X
+chisq.test(X)
+```
+
+
+```{r}
+hist(HR$MonthlyIncome)
+hist(HR$PerformanceRating)
+hist(HR$ï..Age)
+```
+
+```{r}
+install.packages("psych")
+library("psych")
+skew(HR$ï..Age)
+summary(HR)
+kurtosi(HR$ï..Age,na.rm = TRUE)
+```
+
+
+```{r}
+mean(HR$JobSatisfaction)
+sd(HR$JobSatisfaction)
+A<-t.test(HR,alternative="greater",mu=2,conf.int=0.95)
+A
+```
+```{r}
+mean(p1$LengthOfService)
+sd(p1$LengthOfService)
+A<-t.test(p1,alternative="greater",mu=2,conf.int=0.95)
+A
+###Q1 .jobsatisfaction vs attrition
+boxplot(HR$JobSatisfaction~HR$Attrition)
+B<-t.test(HR$JobSatisfaction~HR$Attrition,mu=0,alt="two.sided",conf.int=0.95)
+B
+```
+
+###
+```{r}
+HR %>% ggplot()+
+  geom_point(aes(y=ï..Age,x=MonthlyIncome))+
+  facet_wrap(~Attrition,nrow=2)
+```
+
+
+```{r}
+HR %>% ggplot()+
+  geom_point(aes(y=ï..Age,x=MonthlyIncome))+
+  facet_wrap(~Attrition,nrow=2)
+```
+
+boxplot(HR$JobSatisfaction~HR$Attrition)
+B<-t.test(HR$JobSatisfaction~HR$Attrition,mu=0,alt="two.sided",conf.int=0.95)
+```{r}
+boxplot(HR$MonthlyIncome~HR$Attrition)
+C<-t.test(HR$MonthlyIncome~HR$Attrition,mu=0,alt="two.sided",conf.int=0.95)
+C
+```
+
+```{r}
+X = table(HR$Attrition,HR$BusinessTravel)
+chisq.test(X)
+
+```
+
+
