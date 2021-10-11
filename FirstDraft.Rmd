@@ -29,6 +29,7 @@ TripData <- read.csv("final_tripdata_full Data.csv")
 ```{r}
 head(TripData)
 str(TripData)
+glimpse(TripData)
 ```
 
 ##mean ok data set
@@ -36,13 +37,18 @@ Mean 2
 
  Data Manipulation
  
- 0. Remove Nulls
+ 0. Remove Nulls and Messy Data
 ```{r}
 
 CleanData <-TripData %>%
   na_if("") %>%
   na.omit
 
+CleanData <- CleanData %>% 
+  filter(distance >0 & duration >0)
+
+glimpse(CleanData)
+summary(CleanData)
 ```
  
  
