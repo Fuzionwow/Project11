@@ -5,26 +5,6 @@ date: "10/7/2021"
 output: html_document
 ---
 
-Installing Packages
-```{r}
-#install.packages("tidyverse")
-#install.packages("ggplot2")
-```
-
-Loading Libraries
-```{r}
-library(tidyverse)
-library(ggplot2)
-library(dplyr)
-
-```
-
----
-title: "Untitled1"
-author: "Dushyant Singh"
-date: "10/11/2021"
-output: html_document
----
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -104,8 +84,7 @@ HR %>% ggplot()+
   facet_wrap(~Attrition,nrow=2)
 ```
 
-boxplot(HR$JobSatisfaction~HR$Attrition)
-B<-t.test(HR$JobSatisfaction~HR$Attrition,mu=0,alt="two.sided",conf.int=0.95)
+
 ```{r}
 boxplot(HR$MonthlyIncome~HR$Attrition)
 C<-t.test(HR$MonthlyIncome~HR$Attrition,mu=0,alt="two.sided",conf.int=0.95)
