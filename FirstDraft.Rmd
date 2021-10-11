@@ -22,13 +22,16 @@ library(dplyr)
 File Upload and Asisgnment
 ```{r}
 setwd("~/Desktop/RStudioProject1_OMIS665/RStudioProject_OMIS665")
-TripData <- read.csv("final_tripdata_full Data.csv")
+TripData <- read.csv("final_tripdata_full Data1.csv")
 ```
  
  Exploring the Dataset
 ```{r}
 head(TripData)
 str(TripData)
+str(CleanData)
+summary(CleanData$duration)
+summary(CleanData$distance)
 glimpse(TripData)
 ```
 
@@ -76,3 +79,58 @@ TripData_COunt <-  CleanData %>%
 arrange(desc(count))
 ```
  
+
+Descriptive Analysis:
+
+```{r}
+#Skewness of Distance and Duration
+hist(CleanData$distance)
+hist(CleanData$duration)
+hist(CleanData$route_id)
+
+mean(CleanData$duration)
+mean(CleanData$distance)
+
+CleanData %>% 
+  group_by(route_name) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count))
+
+#Sample Data
+sample(CleanData$ride_id,10)
+SampleData <-CleanData[sample(CleanData$ride_id,10),]
+View(SampleData)
+
+```
+
+
+
+Plots 
+ Compare t-test across two groups/several
+ T.TEst
+ VAriable- duration or distajnce
+ 
+ Anova on Type of bike
+ Duration and Distance
+ 
+What type of bike covers the most/least distance?-  Bar Chart 
+```{r}
+  ggplot(data = CleanData) +
+  geom_line(mapping = aes(x=rideable_type,y=distance))
+
+
+
+
+TripData %>% 
+  group_by(rideable_type) %>% 
+  summarise(TotalDistance = sum(distance)) 
+
+
+
+
+
+
+```
+
+
+What type of bike is used(duration) the most/least ? - Bar 
